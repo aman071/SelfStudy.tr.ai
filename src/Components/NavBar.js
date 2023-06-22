@@ -32,8 +32,10 @@ export default function NavBar(props) {
               </li>
               <li className="nav-item">
                 <a className="nav-link disabled">Disabled</a>
-              </li> */}
+              </li> */}y
+              
             </ul>
+            <button className="btn btn-dark mx-3">Enable Dark Mode</button>
             <form className="d-flex" role="search">
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
               <button className="btn btn-outline-success" type="submit">Search</button>

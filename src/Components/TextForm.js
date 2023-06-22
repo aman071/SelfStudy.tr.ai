@@ -19,20 +19,32 @@ export default function TextForm(props) {
     // Whatever updates we will make to text variable will be through setText function.
     //we cannot just update text like text=".." in React. We will have to use a function.
     //Here that func is setText and we use it like setText("adawdaw")
-    const [text, setText] = useState('Enter text here.')    //useState is a React Hook that allows us to work with states and other React features
+    const [text, setText] = useState('')    //useState is a React Hook that allows us to work with states and other React features
 
     return (
-    <div>
-        <br/>
-        <h2>
-            Hello! It's always nice to recap your learnings!
-        </h2>
-        <br/>
-        <div className="mb-3">
-            <label htmlFor="text-box" className="form-label">{props.heading}</label>
-            <textarea className="form-control" value={text} onChange={handleOnChange} id="text-box" rows="12"></textarea>
+    <>
+        <div className="container">
+            <br/>
+            <h2>
+                Hello! It's always nice to recap your learnings!
+            </h2>
+            <br/>
+            <div className="mb-3">
+                <label htmlFor="text-box" className="form-label">{props.heading}</label>
+                <textarea className="form-control" value={text} onChange={handleOnChange} id="text-box" rows="12"></textarea>
+            </div>
+            <button className="btn btn-primary" onClick={handleOnClick}>Submit</button>
         </div>
-        <button className="btn btn-primary" onClick={handleOnClick}>Submit</button>
-    </div>
+        <div className="container my-3">
+            <h3>Your text summary</h3>
+            <p>{text.split(" ").length} words and {text.length} characters</p>  {/*text.split will return an array*/}
+            
+            {/*For a slow reader, 125 words are read in 1 minute. So 1 word is read in 1/125 min = 0.008 min*/}
+            <p>Your entry can be read in {Math.round(((0.008 * text.split(" ").length) + Number.EPSILON) * 100) / 100} minutes</p>
+
+            <h3>Preview</h3>
+            <p>{text}</p>
+        </div>
+    </>
   )
 }
