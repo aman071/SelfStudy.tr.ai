@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 let name="SelfStudy.tr.ai";
 export default function NavBar(props) {
   return (
+    <>
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">{props.title}</a>
@@ -40,6 +41,7 @@ export default function NavBar(props) {
           </div>
         </div>
       </nav>
+      </>
   )
 }
 
