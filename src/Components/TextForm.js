@@ -7,6 +7,16 @@ export default function TextForm(props) {
         console.log("Submit was clicked.");
     }
 
+    const handleCopy = () => {  //copies text written in the textArea
+        var text=document.getElementById("text-box");   //id of text area was set to be text-box
+        text.select();
+        navigator.clipboard.writeText(text.value);
+    }
+
+    const handleExtraSpaces = () => {  //trims excess spaces between words
+        var newText=text.split(/[ ]+/); //1 or more than 1 space if found, split.
+        setText(newText.join(" "));
+    }
     
     const handleOnChange = (event) => {
         console.log("OnChange.");
@@ -34,6 +44,9 @@ export default function TextForm(props) {
                 <textarea className="form-control" value={text} onChange={handleOnChange} id="text-box" rows="12"></textarea>
             </div>
             <button className="btn btn-primary" onClick={handleOnClick}>Submit</button>
+            <button className="btn btn-primary mx-2" onClick={handleCopy}>Copy Text</button>
+            <button className="btn btn-primary mx-2" onClick={handleExtraSpaces}>Trim Spaces</button>
+            
         </div>
         <div className="container my-3">
             <h3>Your text summary</h3>

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-let name="SelfStudy.tr.ai";
 export default function NavBar(props) {
   return (
     <>
@@ -32,7 +31,7 @@ export default function NavBar(props) {
               </li>
               <li className="nav-item">
                 <a className="nav-link disabled">Disabled</a>
-              </li> */}y
+              </li> */}
               
             </ul>
             <button className="btn btn-dark mx-3">Enable Dark Mode</button>
