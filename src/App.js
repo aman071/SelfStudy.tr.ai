@@ -12,7 +12,7 @@ function App() {
   const toggleMode = () => {
     if(mode === 'light') {
       setMode('dark');
-      document.body.style.backgroundColor='black';
+      document.body.style.backgroundColor='#495057';
     }
     else {
       setMode('light');
@@ -25,7 +25,7 @@ function App() {
       <NavBar title="SelfStudy.tr.ai" mode={mode} toggleMode={toggleMode}/>
       <Banner/>
       <div className="container my-3">
-        <TextForm heading="What did you learn today?"/>
+        <TextForm heading="What did you learn today?" mode={mode} />
       </div>
       
     </>

@@ -31,24 +31,46 @@ export default function TextForm(props) {
     //Here that func is setText and we use it like setText("adawdaw")
     const [text, setText] = useState('')    //useState is a React Hook that allows us to work with states and other React features
 
+    //these buttons and toggleStyle were setting dark mode for this textForm area only. But I wanted the entire page, so i moved that functionality
+    //to App.js and use state variable to handle it. The state variable is called mode, which is received as props in TextForm and handled
+    //here accordingly
+    // const [btnText, setBtnText] = useState('Enable Dark Mode');       //dark mode button text toggling
+
+    // const toggleStyle = () => {
+    //     if(myStyle.color === 'white'){
+    //         setMyStyle({
+    //             color:'black',
+    //             backgroundColor:'white'
+    //         });
+    //         setBtnText('Enable Dark Mode');
+    //     }
+    //     else{
+    //         setMyStyle({
+    //             color:'white',
+    //             backgroundColor:'black'
+    //         });
+    //         setBtnText('Enable Light Mode');
+    //     }
+    // };
+
     return (
     <>
-        <div className="container">
+        <div className={`container text-${props.mode==='light'?'dark':'light'}`} >
             <br/>
-            <h2>
-                Hello! It's always nice to recap your learnings!
-            </h2>
-            <br/>
-            <div className="mb-3">
+            <h2> Hello! It's always nice to recap your learnings!</h2>
+            <div className="mb-2">
                 <label htmlFor="text-box" className="form-label">{props.heading}</label>
-                <textarea className="form-control" value={text} onChange={handleOnChange} id="text-box" rows="12"></textarea>
+                <textarea   className="form-control" value={text} onChange={handleOnChange} 
+                            style={{backgroundColor:props.mode==='light'?'white':'grey'}} id="text-box" rows="12">
+                </textarea>
             </div>
-            <button className="btn btn-primary" onClick={handleOnClick}>Submit</button>
-            <button className="btn btn-primary mx-2" onClick={handleCopy}>Copy Text</button>
-            <button className="btn btn-primary mx-2" onClick={handleExtraSpaces}>Trim Spaces</button>
+            <button className="btn btn-primary mx-2 my-2" onClick={handleOnClick}>Submit</button>
+            <button className="btn btn-primary mx-2 my-2" onClick={handleCopy}>Copy Text</button>
+            <button className="btn btn-primary mx-2 my-2" onClick={handleExtraSpaces}>Trim Spaces</button>
+            {/* <button className="btn btn-primary mx-2 my-2" onClick={toggleStyle}>{btnText} TextArea</button> */}
             
         </div>
-        <div className="container my-3">
+        <div className={`container my-3 text-${props.mode==='light'?'dark':'light'}`}>
             <h3>Your text summary</h3>
             <p>{text.split(" ").length} words and {text.length} characters</p>  {/*text.split will return an array*/}
             
@@ -56,7 +78,7 @@ export default function TextForm(props) {
             <p>Your entry can be read in {Math.round(((0.008 * text.split(" ").length) + Number.EPSILON) * 100) / 100} minutes</p>
 
             <h3>Preview</h3>
-            <p>{text}</p>
+            <p>{text.length>0?text:"Enter text in the area above to preview it"}</p>
         </div>
     </>
   )
