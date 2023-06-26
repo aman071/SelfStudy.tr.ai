@@ -9,7 +9,7 @@ function Alert(props) {
 
   return (
     // NOTICE THIS SYNTAX. The second expression returns true always since it is a div element and just shows content, but it will only
-    // run if props.alert is true, which means it is not NULL.
+    // run if props.alert is true, which means it is nt NULL.
     //alert-primary is blue,    alert-success is green
     //alert-warning is yellow,  alert-danger is red
     props.alert && <div class={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
