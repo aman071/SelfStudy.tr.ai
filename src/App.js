@@ -50,7 +50,14 @@ function App() {
     <>
     <Router>
       <Routes>
-        <Route path="/" element={
+        {/* writing 'exact' keyword is good practice because by default React does partial matching of routes, not complete
+        For example, if we have 2 paths
+        /users        --> Where we render component 1
+        /users/home   --> Where we render component 2
+        If we don't write exact then React will match both routes(in case we dont write the second route correctly) 
+        to /users and render component 1 only.
+        */}
+        <Route exact path="/" element={
           <>
             <NavBar title="SelfStudy.tr.ai" mode={mode} toggleMode={toggleMode}/>
             <Alert alert={alert} />
@@ -62,7 +69,7 @@ function App() {
           </>
         } />
         
-        <Route path="/about" element={
+        <Route exact path="/about" element={
         <About />
         } />
           
