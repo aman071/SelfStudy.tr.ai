@@ -1,10 +1,15 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import NavBar from './Components/NavBar';
 import Banner from './Components/Banner';
 import TextForm from './Components/TextForm';
 import Alert from './Components/Alert';
+import About from './Components/About';
 import { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from "react-router-dom";
 
 
 function App() {
@@ -35,15 +40,36 @@ function App() {
     }
   }
 
+  /*
+  Everything related to router will be nested under BrowserRouter (imported here as Router)
+  In latest react-router-dom v6, Switch has been replaced by Routes
+  Every route you want, must be as a nested component inside Routes.
+  Whatever components you want to render on a path, must be enclosed in element tag and not outside it. (v6 standard)
+  */
   return (
     <>
-      <NavBar title="SelfStudy.tr.ai" mode={mode} toggleMode={toggleMode}/>
-      <Alert alert={alert} />
-      <Banner/>
-      <div className="container my-3">
-        <TextForm heading="What did you learn today?" mode={mode} />
-      </div>
-      
+    <Router>
+      <Routes>
+        <Route path="/" element={
+          <>
+            <NavBar title="SelfStudy.tr.ai" mode={mode} toggleMode={toggleMode}/>
+            <Alert alert={alert} />
+            <Banner/>
+            {/* <About /> */}
+            {/* <div className="container my-3">
+              <TextForm heading="What did you learn today?" mode={mode} />
+            </div> */}
+          </>
+        } />
+        
+        <Route path="/about" element={
+        <About />
+        } />
+          
+        {/* <Route path="/users" element={<About />} />
+          <Route path="/" element={<About />} /> */}
+      </Routes>
+    </Router>  
     </>
   );
 }
