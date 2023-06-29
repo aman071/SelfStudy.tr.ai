@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 
-
 export default function TextForm(props) {
 
     const handleOnClick = () => {
@@ -76,9 +75,11 @@ export default function TextForm(props) {
         <div className={`container my-3 text-${props.mode==='light'?'dark':'light'}`}>
             <h3>Your text summary</h3>
             {/* text.split gives array. filter takes an element and applies the condition. Here, that ele will be in array only if its length!=0 */}
+            {/* eslint-disable-next-line */} {/* This line only to remove Unnecessary escape character: \s warning */}
             <p>{text.split("/\s+/").filter((element)=> {return element.length!==0}).length} words and {text.length} characters</p>  {/*text.split will return an array*/}
             
             {/*For a slow reader, 125 words are read in 1 minute. So 1 word is read in 1/125 min = 0.008 min*/}
+            {/* eslint-disable-next-line */}
             <p>Your entry can be read in {Math.round(((0.008 * text.split("/\s+/").filter((element)=> {return element.length!==0}).length) + Number.EPSILON) * 100) / 100} minutes</p>
 
             <h3>Preview</h3>

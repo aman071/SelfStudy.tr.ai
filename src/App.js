@@ -8,8 +8,9 @@ import About from './Components/About';
 import { useState } from 'react';
 import {
   BrowserRouter as Router,
-  Routes, Route, Link
+  Routes, Route
 } from "react-router-dom";
+import TextEditor from './Components/TextEditor';
 
 
 function App() {
@@ -63,7 +64,8 @@ function App() {
             <Alert alert={alert} />
             <Banner/>
             <div className="container my-3">
-              <TextForm heading="What did you learn today?" mode={mode} />
+              {/* <TextForm heading="What did you learn today?" mode={mode} /> */}
+              <TextEditor/>
             </div>
           </>
         } />
