@@ -11,6 +11,7 @@ import {
   Routes, Route
 } from "react-router-dom";
 import TextEditor from './Components/TextEditor';
+import parser from "html-react-parser";
 
 
 function App() {
@@ -41,6 +42,12 @@ function App() {
     }
   }
 
+  const DisplayText = ({ text }) => {
+    return <div className='ProseMirror'>{parser(text)}</div>;
+  };
+
+  const [editorContent, setEditorContent] = useState("");
+
   /*
   Everything related to router will be nested under BrowserRouter (imported here as Router)
   In latest react-router-dom v6, Switch has been replaced by Routes
@@ -65,7 +72,8 @@ function App() {
             <Banner/>
             <div className="container my-3">
               {/* <TextForm heading="What did you learn today?" mode={mode} /> */}
-              <TextEditor/>
+              <TextEditor mode={mode} setEditorContent={setEditorContent} />
+              <DisplayText text={editorContent} />
             </div>
           </>
         } />

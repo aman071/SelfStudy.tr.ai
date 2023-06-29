@@ -11,11 +11,11 @@ export default function TextForm(props) {
         // var text=document.getElementById("text-box");   //id of text area was set to be text-box
         // text.select();
         // document.getSelection().removeAllRanges();  //deselect selected text
-        navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(props.text);
     }
 
     const handleExtraSpaces = () => {  //trims excess spaces between words
-        var newText=text.split(/[ ]+/); //1 or more than 1 space if found, split.
+        var newText=props.text.split(/[ ]+/); //1 or more than 1 space if found, split.
         setText(newText.join(" "));
     }
     
