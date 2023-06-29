@@ -13,22 +13,22 @@ export default function Banner() {
           <div className="carousel-item active">
             <img src={process.env.PUBLIC_URL + '/study_banner.jpg'} style={bannerStyle} className="d-block w-100" alt="..." />
             <div className="carousel-caption d-none d-md-block">
-              <h5>First slide label</h5>
-              <p>Some representative placeholder content for the first slide.</p>
+              <h1>Learn!</h1>
+              <p>Spend your day learning and upskilling!</p>
             </div>
           </div>
           <div className="carousel-item">
-            <img src={process.env.PUBLIC_URL + '/study_banner.jpg'} style={bannerStyle} className="d-block w-100" alt="..." />
+            <img src={process.env.PUBLIC_URL + '/study_banner2.jpg'} style={bannerStyle} className="d-block w-100" alt="..." />
             <div className="carousel-caption d-none d-md-block">
-              <h5>Second slide label</h5>
-              <p>Some representative placeholder content for the first slide.</p>
+              <h1>Journal your learnings!</h1>
+              <p>Recap what you learnt today. Write it in your own words!</p>
             </div>
           </div>
           <div className="carousel-item">
-            <img src={process.env.PUBLIC_URL + '/study_banner.jpg'} style={bannerStyle} className="d-block w-100" alt="..." />
+            <img src={process.env.PUBLIC_URL + '/study_banner3.jpg'} style={bannerStyle} className="d-block w-100" alt="..." />
             <div className="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>Some representative placeholder content for the first slide.</p>
+              <h1>Revise!</h1>
+              <p>Get your content on multiple platforms to revise what you learnt previously!</p>
             </div>
           </div>
         </div>
