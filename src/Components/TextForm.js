@@ -8,9 +8,11 @@ export default function TextForm(props) {
     }
 
     const handleCopy = () => {  //copies text written in the textArea
-        var text=document.getElementById("text-box");   //id of text area was set to be text-box
-        text.select();
-        navigator.clipboard.writeText(text.value);
+        //these 3 lines below ka kaam is done by the last line by the navigator object
+        // var text=document.getElementById("text-box");   //id of text area was set to be text-box
+        // text.select();
+        // document.getSelection().removeAllRanges();  //deselect selected text
+        navigator.clipboard.writeText(text);
     }
 
     const handleExtraSpaces = () => {  //trims excess spaces between words
@@ -61,24 +63,26 @@ export default function TextForm(props) {
             <div className="mb-2">
                 <label htmlFor="text-box" className="form-label">{props.heading}</label>
                 <textarea   className="form-control" value={text} onChange={handleOnChange} 
-                            style={{backgroundColor:props.mode==='light'?'white':'grey'}} id="text-box" rows="12">
+                            style={{backgroundColor:props.mode==='light'?'white':'#2a2e34', 
+                                    color:props.mode==='light'?'black':'white'}} id="text-box" rows="12">
                 </textarea>
             </div>
-            <button className="btn btn-primary mx-2 my-2" onClick={handleOnClick}>Submit</button>
-            <button className="btn btn-primary mx-2 my-2" onClick={handleCopy}>Copy Text</button>
-            <button className="btn btn-primary mx-2 my-2" onClick={handleExtraSpaces}>Trim Spaces</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleOnClick}>Submit</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleCopy}>Copy Text</button>
+            <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleExtraSpaces}>Trim Spaces</button>
             {/* <button className="btn btn-primary mx-2 my-2" onClick={toggleStyle}>{btnText} TextArea</button> */}
             
         </div>
         <div className={`container my-3 text-${props.mode==='light'?'dark':'light'}`}>
             <h3>Your text summary</h3>
-            <p>{text.split(" ").length} words and {text.length} characters</p>  {/*text.split will return an array*/}
+            {/* text.split gives array. filter takes an element and applies the condition. Here, that ele will be in array only if its length!=0 */}
+            <p>{text.split("/\s+/").filter((element)=> {return element.length!==0}).length} words and {text.length} characters</p>  {/*text.split will return an array*/}
             
             {/*For a slow reader, 125 words are read in 1 minute. So 1 word is read in 1/125 min = 0.008 min*/}
-            <p>Your entry can be read in {Math.round(((0.008 * text.split(" ").length) + Number.EPSILON) * 100) / 100} minutes</p>
+            <p>Your entry can be read in {Math.round(((0.008 * text.split("/\s+/").filter((element)=> {return element.length!==0}).length) + Number.EPSILON) * 100) / 100} minutes</p>
 
             <h3>Preview</h3>
-            <p>{text.length>0?text:"Enter text in the area above to preview it"}</p>
+            <p>{text.length>0?text:"Nothing to preview"}</p>
         </div>
     </>
   )

@@ -62,10 +62,9 @@ function App() {
             <NavBar title="SelfStudy.tr.ai" mode={mode} toggleMode={toggleMode}/>
             <Alert alert={alert} />
             <Banner/>
-            {/* <About /> */}
-            {/* <div className="container my-3">
+            <div className="container my-3">
               <TextForm heading="What did you learn today?" mode={mode} />
-            </div> */}
+            </div>
           </>
         } />
         
