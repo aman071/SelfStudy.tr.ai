@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import Highlight from '@tiptap/extension-highlight'
+import CharacterCount from '@tiptap/extension-character-count'
+import parser from "html-react-parser";
 import {
   FaBold,   FaHeading,          FaHighlighter,
   FaItalic, FaListOl,
@@ -9,6 +12,7 @@ import {
   FaRedo,   FaStrikethrough,    FaUnderline,    FaUndo,
 } from "react-icons/fa";
 import '../TextEditor.css';
+import Popup from './Popup';
 
 const MenuBar = ({ editor }, props) => {
   if (!editor) {
@@ -81,13 +85,25 @@ const MenuBar = ({ editor }, props) => {
           >
           <FaQuoteLeft />
           </button>
-          {/* Highlighter not working */}
-          {/* <button
+          
+          <button
           onClick={() => editor.chain().focus().toggleHighlight().run()}
           className={editor.isActive("highlight") ? "is_active" : ""}
           >
           <FaHighlighter />
-          </button> */}
+          </button>
+          <button
+            onClick={() => editor.chain().focus().toggleHighlight({ color: '#ffc078' }).run()}
+            className={editor.isActive('highlight', { color: '#ffc078' }) ? 'is-active' : ''}
+          >
+            <h6>Orange Highlight</h6>
+          </button>
+          <button
+            onClick={() => editor.chain().focus().toggleHighlight({ color: '#8ce99a' }).run()}
+            className={editor.isActive('highlight', { color: '#8ce99a' }) ? 'is-active' : ''}
+          >
+            <h6>Green Highlight</h6>
+          </button>
       </div>
 
       <div>
@@ -106,16 +122,19 @@ const MenuBar = ({ editor }, props) => {
 const TextEditor = ({setEditorContent, mode} ) => {
 
   const [text, setText] = useState(""); // State to store the text content
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const handleOnClick = () => {
-    console.log("Submit was clicked.");
-  }
+  const handleOnSubmit = (e) => {
+    // console.log("Submit was clicked.");
+    setIsPopupOpen(!isPopupOpen);
+    e.preventDefault();
+  };
 
   const handleRemoveSpaces = () => {
     const trimmedText = text.replace(/\s+/g, " "); // Remove extra spaces
     editor.commands.setContent(trimmedText); // Update the editor conte
     setEditorContent(trimmedText); // Update the editor content (optional)
-    // setText(trimmedText); // Update the text content
+    setText(trimmedText); // Update the text content
   };
 
   const handleCopy = () => {  //copies text written in the textArea
@@ -127,9 +146,8 @@ const TextEditor = ({setEditorContent, mode} ) => {
   };
 
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
+    extensions: [StarterKit, Underline, Highlight.configure({ multicolor: true }), CharacterCount.configure()],
     content: text, // Use the text content as the initial editor content
-    autofocus: true,
     onUpdate({ editor }) {
       const htmlContent = editor.getHTML();
       setEditorContent(htmlContent); // Update the editor content
@@ -137,39 +155,57 @@ const TextEditor = ({setEditorContent, mode} ) => {
     },
   });
 
-  // const handleOnChange = (event) => {
-  //   console.log("OnChange.");
-  //   props.setText(event.target.value);    //jo bhi change ho rha hai text area mei, that is handled by this function and this line helps update
-  //                                   //ki whatever the user is making change should be updated, in this case, text is set to what is was 
-  //                                   //before + what is being done. If this line is not entered, then we will not be able to add stuff.
-  // }
+  
+
+  if (!editor) {return null;}
+
+  const editorTextCharCount=editor?editor.storage.characterCount.characters():0;
+  const editorTextWordCount=editor?editor.storage.characterCount.words():0;
+
+  const DisplayText = ({ text }) => {
+    return <div className='ProseMirror'>{parser(text)}</div>;
+  };
+
+  function parsedText(text) {
+    if(text.length!==0) return parser(text).props.children;
+    else return '';
+  }
 
   return (
     <>
+      <div className="container text-dark" >
+          <h2> Hello! It's always nice to recap your learnings!</h2>
+          <h5> What did you learn today?</h5>
+      </div>
+
       <div className="textEditor">
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />
       </div>
 
       <div className="buttons">
-        <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleOnClick}>Submit</button>
-        <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleRemoveSpaces}>Trim Spaces</button>
-        <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleCopy}>Copy Text</button>
+        <button disabled={editorTextCharCount===0} className="btn btn-primary mx-2 my-2" onClick={handleRemoveSpaces}>Trim Spaces</button>
+        <button disabled={editorTextCharCount===0} className="btn btn-primary mx-2 my-2" onClick={handleCopy}>Copy Text</button>
+      </div>
+
+      <div className="buttons">
+        <button disabled={editorTextCharCount===0} className="btn btn-primary mx-2 my-2" onClick={handleOnSubmit}>Submit</button>
+        {editorTextCharCount!==0 && isPopupOpen && <Popup charCount={editorTextCharCount} content={parsedText(text)}/>}
+        {/* {parsedText(text)} */}
       </div>
 
       <div className={`container my-3 text-${mode==='light'?'dark':'light'}`}>
-        {/* {console.log(mode)} */}
         <h3>Your text summary</h3>
-        {/* text.split gives array. filter takes an element and applies the condition. Here, that ele will be in array only if its length!=0 */}
         {/* eslint-disable-next-line */} {/* This line only to remove Unnecessary escape character: \s warning */}
-        <p>{text.split("/\s+/").filter((element)=> {return element.length!==0}).length} words and {text.length} characters</p>  {/*text.split will return an array*/}
+        <p>{editorTextWordCount} words and {editorTextCharCount} characters</p>
         
         {/*For a slow reader, 125 words are read in 1 minute. So 1 word is read in 1/125 min = 0.008 min*/}
         {/* eslint-disable-next-line */}
-        <p>Your entry can be read in {Math.round(((0.008 * text.split("/\s+/").filter((element)=> {return element.length!==0}).length) + Number.EPSILON) * 100) / 100} minutes</p>
+        <p>Your entry can be read in {Math.round(((0.008 * editorTextWordCount) + Number.EPSILON) * 100) / 100} minutes</p>
 
         <h3>Preview</h3>
-        <p>{text.length>0?text:"Nothing to preview"}</p>
+        <DisplayText text={text} />
+        {/* <p>{text.length>0?text:"Nothing to preview"}</p> */}
         </div>
     </>
   );
