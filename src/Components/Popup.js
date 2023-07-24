@@ -12,10 +12,33 @@ function Popup(props) {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Do something with the 'email' variable, for example, submit it to a server.
-    console.log('Submitted email:', email);
+
+    try {
+      // Send the email data to the backend using a POST request
+      const response = await fetch('http://localhost:8020/sendData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email:email, text: props.content }), // Send the email and text data to the backend
+      });
+
+      if (response.ok) {
+        // Reset the email and hide the input field after successful submission.
+        setEmail('');
+        setShowInput(false);
+      } else {
+        console.error('Failed to send email.');
+        // Handle the error case here if needed.
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      // Handle the error case here if needed.
+    }
+    
     // Reset the email and hide the input field after submission.
     setEmail('');
     setShowInput(false);

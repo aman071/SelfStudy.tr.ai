@@ -190,7 +190,7 @@ const TextEditor = ({setEditorContent, mode} ) => {
 
       <div className="buttons">
         <button disabled={editorTextCharCount===0} className="btn btn-primary mx-2 my-2" onClick={handleOnSubmit}>Submit</button>
-        {editorTextCharCount!==0 && isPopupOpen && <Popup charCount={editorTextCharCount} content={parsedText(text)}/>}
+        {editorTextCharCount!==0 && isPopupOpen && <Popup charCount={editorTextCharCount} content={text}/>}
         {/* {parsedText(text)} */}
       </div>
 
