@@ -2,13 +2,10 @@
 Flexibility. Customizability. Learn your own way.
 
 Make notes about what you have learnt, and get them delivered to your inbox, the way you want. 
-A quiz?
-
-A summary?
-
-A hard test? 
-
+A quiz? A summary? A hard test? 
 You say it.
+
+Summary: You enter your notes into the web app. While submitting, you decide on a frequency for how often you want to receive the emails associated to this particular set of notes. Based on your chosen frequency and behavior, emails are sent to your email address.
 
 NOTE: Under development.
 # ------------------------------------------
