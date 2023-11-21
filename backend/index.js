@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cheerio = require('cheerio');
+const cron = require('node-cron');
 const { DOMParser } = require('dom-parser');
 const previewEmail = require('preview-email');
 const nodemailer = require('nodemailer');
@@ -45,6 +46,25 @@ function sendEmailWithContent(email, generated_text, text) {
     };
     
     // previewEmail(mailOptions).then(console.log).catch(console.error);
+    /*
+    * * * * * *
+    | | | | | |
+    | | | | | day of week
+    | | | | month
+    | | | day of month
+    | | hour
+    | minute
+    second ( optional )
+    */
+    // cron.schedule('* * * * 3', function () {
+    //   console.log('---------------------');
+    //   console.log('Running Cron Process');
+    //   // Delivering mail with sendMail method
+    //   transporter.sendMail(mailOptions, (error, info) => {
+    //     if (error) console.log(error);
+    //     else console.log('Email sent: ' + info.response);
+    //   });
+    // });
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
